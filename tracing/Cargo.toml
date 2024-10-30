@@ -46,7 +46,7 @@ tracing-mock = { path = "../tracing-mock" }
 wasm-bindgen-test = "0.3.38"
 
 [features]
-default = ["std", "attributes"]
+default = ["std", "attributes", "max_level_off", "release_max_level_off"]
 
 max_level_off = []
 max_level_error = []
