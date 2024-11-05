@@ -29,12 +29,17 @@ pub struct Event<'a> {
 impl<'a> Event<'a> {
     /// Constructs a new `Event` with the specified metadata and set of values,
     /// and observes it with the current subscriber.
+    #[cfg(not(feature = "disabled"))]
     pub fn dispatch(metadata: &'static Metadata<'static>, fields: &'a field::ValueSet<'_>) {
         let event = Event::new(metadata, fields);
         crate::dispatcher::get_default(|current| {
             current.event(&event);
         });
     }
+
+    #[cfg(feature = "disabled")]
+    #[allow(missing_docs)]
+    pub fn dispatch(_: &'static Metadata<'static>, _: &'a field::ValueSet<'_>) {}
 
     /// Returns a new `Event` in the current span, with the specified metadata
     /// and set of values.

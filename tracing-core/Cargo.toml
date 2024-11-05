@@ -28,6 +28,7 @@ rust-version = "1.63.0"
 
 [features]
 default = ["std", "valuable?/std"]
+disabled = []
 std = ["once_cell"]
 
 [badges]

@@ -1040,7 +1040,7 @@ pub mod __macro_support {
     /// by the `tracing` macros, but it is not part of the stable versioned API.
     /// Breaking changes to this module may occur in small-numbered versions
     /// without warning.
-    #[cfg(feature = "log")]
+    #[cfg(all(feature = "log", not(feature = "disabled")))]
     pub fn __tracing_log(
         meta: &Metadata<'static>,
         logger: &'static dyn log::Log,
@@ -1062,6 +1062,15 @@ pub mod __macro_support {
                 ))
                 .build(),
         );
+    }
+
+    #[cfg(all(feature = "log", feature = "disabled"))]
+    pub fn __tracing_log(
+        _: &Metadata<'static>,
+        _: &'static dyn log::Log,
+        _: log::Metadata<'_>,
+        _: &tracing_core::field::ValueSet<'_>,
+    ) {
     }
 }
 
